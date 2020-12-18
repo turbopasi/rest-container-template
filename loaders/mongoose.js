@@ -6,7 +6,8 @@ module.exports = async () => {
   mongoose.connect(`mongodb+srv://${config.mongodb.username}:${config.mongodb.password}@template-cluster.lf07u.mongodb.net/${config.mongodb.databasename}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
   });
 
   const db = mongoose.connection;
