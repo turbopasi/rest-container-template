@@ -1,8 +1,8 @@
-const { User } = require('../models').mongoose;
 
-module.exports = function () {
+module.exports = function ({ mongooseModel, joiModel }) {
 
-  this.model = User;
+  this.model  = mongooseModel;
+  this.schema = joiModel;
 
   this.Find              = Find;
   this.FindById          = FindById;
@@ -46,7 +46,8 @@ async function FindByIdAndRemove (id = null, {select = null} = {}) {
 
 async function FindByIdAndUpdate (id = null, update = {}, {upsert = false, returnNew = true, select = null} = {}) {
   if (!id) { throw new Error('id required for FindByIdAndUpdate method'); }
-  let mongooseQuery = this.model.findByIdAndUpdate(id, update, {
+  const validateData = await this.schema.updateUser.validateAsync(update, { stripUnknown : true });
+  let mongooseQuery = this.model.findByIdAndUpdate(id, validateData, {
     upsert, new : returnNew
   });
   if (select) { mongooseQuery = mongooseQuery.select(select); }
@@ -70,7 +71,8 @@ async function FindOneAndRemove ({ query = {}, select = null } = {}) {
 }
 
 async function FindOneAndUpdate ({query = {}, upsert = false, returnNew = true, select = null} = {}, update = {}) {
-  let mongooseQuery = this.model.findOneAndUpdate(query, update, {
+  const validateData = await this.schema.updateUser.validateAsync(update, { stripUnknown : true });
+  let mongooseQuery = this.model.findOneAndUpdate(query, validateData, {
     upsert, new : returnNew
   });
   if (select) { mongooseQuery = mongooseQuery.select(select); }
@@ -82,7 +84,8 @@ async function Exists (query = {}) {
 }
 
 async function Create (data) {
-  const newUser = new this.model(data);
+  const validateData = await this.schema.createUser.validateAsync(data, { stripUnknown : true });
+  const newUser = new this.model(validateData);
   return await newUser.save();
 }
 

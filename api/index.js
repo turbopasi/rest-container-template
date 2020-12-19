@@ -1,13 +1,18 @@
-const { Router } = require('express');
-const user       = require('./routes/user');
+const userRoutes = require('./routes/user');
+const Controller = require('./controller/index');
 
-module.exports = () => {
+module.exports = ({ config, LogService, UserService, router : parentRouter }) => {
 
-  // Main Router 
-  const router = Router();
+  const controller = new Controller({
+    config     : config,
+    LogService : LogService,
+    UserService: UserService
+  });
 
-  user(router);
+  parentRouter.use('/user', userRoutes({
+    controller: controller.user,
+  }));
 
-  return router;
+  return parentRouter;
 
 }  

@@ -1,5 +1,6 @@
 
 
 module.exports = {
-  UserService : require('./user')
+  UserService : require('./user'),
+  LogService : require('./logger')
 }

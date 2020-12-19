@@ -3,7 +3,7 @@ const cors       = require('cors');
 const express    = require('express');
 const routes     = require('../api');
 
-module.exports = async ({ consoleDebug, port }) => {
+module.exports = async ({ config, LogService, UserService }) => {
 
   const app = express();
 
@@ -12,15 +12,27 @@ module.exports = async ({ consoleDebug, port }) => {
   app.enable('trust proxy');
   app.disable('x-powered-by');
 
-  consoleDebug && app.use(require('morgan')('dev'));
+  config.consoleDebug && app.use(require('morgan')('dev'));
   
+  // Some express middleware
   app.use(cors());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
 
-  app.use('/', routes());
+  // Load express routes
+  app.use('/', routes({
+    config     : config,
+    LogService : LogService,
+    UserService: UserService,
+    router     : express.Router()
+  }));
 
-  await listen(app, port);
+  // Start express server by listening to a port
+  try {
+    await listen(app, config.port);
+  } catch (ex) {
+    logger.error(`${ex.name} - ${ex.message}`);
+  }
 
   return app;
 

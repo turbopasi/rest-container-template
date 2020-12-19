@@ -1,14 +1,12 @@
-const { Router }          = require('express');
-const controller          = require('../controller');
-const router              = Router();
+const router = require('express').Router();
 
-module.exports = (parentRouter) => {
+module.exports = ({ controller }) => {
 
-  router.post('/', controller.user.post['/']);
-  router.get('/:id', controller.user.get['/:id']);
-  router.put('/:id', controller.user.put['/:id']);
-  router.delete('/:id', controller.user.delete['/:id']);
+  router.post('/', controller.post['/']);
+  router.get('/:id', controller.get['/:id']);
+  router.put('/:id', controller.put['/:id']);
+  router.delete('/:id', controller.delete['/:id']);
 
-  parentRouter.use('/user', router);
-
+  return router;
+  
 }

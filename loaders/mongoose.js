@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-const config   = require('../config');
 
-module.exports = async () => {
+module.exports = async ({ config, LogService }) => {
 
-  mongoose.connect(`mongodb+srv://${config.mongodb.username}:${config.mongodb.password}@template-cluster.lf07u.mongodb.net/${config.mongodb.databasename}?retryWrites=true&w=majority`, {
+  mongoose.connect(`mongodb+srv://${config.username}:${config.password}@template-cluster.lf07u.mongodb.net/${config.databasename}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -13,6 +12,7 @@ module.exports = async () => {
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   await open(db);
+  LogService.info('MongoDB connected')
 
   return db;
 

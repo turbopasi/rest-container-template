@@ -1,5 +1,8 @@
 module.exports = {
   mongoose : {
-    User : require('./mongoose/user')
+    user : require('./mongoose/user')
+  },
+  joi : {
+    user : require('./joi/user')
   }
 }
