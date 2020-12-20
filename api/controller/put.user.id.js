@@ -1,15 +1,13 @@
-const Joi                 = require('joi');
-
-const schema = Joi.object({
-  email : Joi.string().required()
-});
-
 module.exports = ({ LogService, UserService }) => {
 
-  return async(req, res) => {
-    const body = await schema.validateAsync(req.body, {stripUnknown : true});
-    const user = await userServiceInstance.FindByIdAndUpdate(req.params.id, body);
-    return res.status(200).json(user);
+  return async(req, res, next) => {
+    try {
+      const user = await UserService.FindByIdAndUpdate(req.params.id, req.body);
+      res.data = user;
+      return next();
+    } catch (ex) {
+      return next(ex);
+    }
   }
   
 }

@@ -1,9 +1,13 @@
 module.exports = ({ LogService, UserService }) => {
 
-  return async (req, res) => {
-    const body = await schema.validateAsync(req.body, {stripUnknown : true});
-    const newUser = await userServiceInstance.Create(body);
-    return res.status(201).json(newUser);
+  return async (req, res, next) => {
+    try {
+      const newUser = await UserService.Create(req.body);
+      res.data = newUser;
+      return next();
+    } catch (ex) {
+      return next(ex);
+    }
   }
   
 }

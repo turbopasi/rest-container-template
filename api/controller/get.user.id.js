@@ -1,8 +1,13 @@
 module.exports = ({ LogService, UserService }) => {
 
   return async (req, res, next) => {
-    const user = await userServiceInstance.FindById(req.params.id);
-    return res.status(200).json(user);
+    try {
+      const user = await UserService.FindById(req.params.id);
+      res.data = user;
+      return next();
+    } catch (ex) {
+      return next(ex);
+    }
   }
 
 }

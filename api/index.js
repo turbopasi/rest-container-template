@@ -1,5 +1,6 @@
 const userRoutes = require('./routes/user');
 const Controller = require('./controller/index');
+const Middleware = require('./middleware/index');
 
 module.exports = ({ config, LogService, UserService, router : parentRouter }) => {
 
@@ -9,8 +10,14 @@ module.exports = ({ config, LogService, UserService, router : parentRouter }) =>
     UserService: UserService
   });
 
+  const middleware = new Middleware({
+    config    : config,
+    LogService: LogService
+  });
+
   parentRouter.use('/user', userRoutes({
-    controller: controller.user,
+    middleware: middleware.user,
+    controller: controller.user
   }));
 
   return parentRouter;
