@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose           = require('mongoose');
 const {mongodb : config} = require('../config');
-const LogService = require('../injector').get('LogService');
+const LogService         = require('../injector').get('LogService');
 
 module.exports = async () => {
 
   mongoose.connect(`mongodb+srv://${config.username}:${config.password}@template-cluster.lf07u.mongodb.net/${config.databasename}?retryWrites=true&w=majority`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
+    useNewUrlParser   : config.useNewUrlParser,
+    useUnifiedTopology: config.useUnifiedTopology,
+    useCreateIndex    : config.useCreateIndex,
+    useFindAndModify  : config.useFindAndModify
   });
 
   const db = mongoose.connection;

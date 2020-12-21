@@ -10,8 +10,12 @@ module.exports = {
     consoleDebug: process.env.CONSOLE_DEBUG
   },
   mongodb: {
-    username    : process.env.MONGODB_USERNAME,
-    password    : process.env.MONGODB_PASSWORD,
-    databasename: process.env.MONGODB_DATABASENAME
+    username          : process.env.MONGODB_USERNAME,
+    password          : process.env.MONGODB_PASSWORD,
+    databasename      : process.env.MONGODB_DATABASENAME,
+    useNewUrlParser   : true,
+    useUnifiedTopology: true,
+    useCreateIndex    : true,
+    useFindAndModify  : false
   }
 }
