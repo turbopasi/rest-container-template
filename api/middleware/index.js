@@ -1,6 +1,6 @@
-module.exports = function ({ config, LogService }) {
+module.exports = {
 
-  this.user = {
+  user : {
     test : (req, res, next) => {
       LogService.info('User test middleware fired')
       return next

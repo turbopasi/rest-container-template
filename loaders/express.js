@@ -1,10 +1,14 @@
-const bodyParser       = require('body-parser');
-const cors             = require('cors');
-const express          = require('express');
-const routes           = require('../api');
-const { GeneralError } = require('../util/errors');
+const bodyParser = require('body-parser');
+const cors       = require('cors');
+const express    = require('express');
+const api        = require('../api');
+// const { GeneralError } = require('../util/errors');
 
-module.exports = async ({ config, LogService, UserService }) => {
+const { express : config } = require('../config');
+const container            = require('../injector');
+const LogService           = container.get('LogService');
+
+module.exports = async () => {
 
   const app = express();
 
@@ -13,7 +17,6 @@ module.exports = async ({ config, LogService, UserService }) => {
   app.enable('trust proxy');
   app.disable('x-powered-by');
 
-  // config.consoleDebug && app.use(require('morgan')('dev'));
   app.use((req, res, next) => {
     LogService.http(`${req.ip} ${req.method} ${req.path}`);
     return next();
@@ -25,14 +28,9 @@ module.exports = async ({ config, LogService, UserService }) => {
   app.use(bodyParser.json());
 
   // Load express routes
-  app.use('/', routes({
-    config     : config,
-    LogService : LogService,
-    UserService: UserService,
-    router     : express.Router()
-  }));
+  app.use('/', api());
 
-  app.use(handleErrors(LogService));
+  // app.use(handleErrors(LogService));
 
   // Start express server by listening to a port
   try {
@@ -57,7 +55,7 @@ function listen (app, port) {
 function handleErrors (LogService) {
   return (err, req, res, next) => {
 
-    LogService.error(`${err.name}`);
+    LogService.error(`${err.name} ${err.message}`);
 
     if (err instanceof GeneralError) {
       return res.status(err.getCode()).json({

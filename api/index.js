@@ -1,25 +1,17 @@
 const userRoutes = require('./routes/user');
-const Controller = require('./controller/index');
-const Middleware = require('./middleware/index');
 
-module.exports = ({ config, LogService, UserService, router : parentRouter }) => {
+const controller = require('./controller/index');
+const middleware = require('./middleware/index');
+const express    = require('express');
+const router     = express.Router();
 
-  const controller = new Controller({
-    config     : config,
-    LogService : LogService,
-    UserService: UserService
-  });
+module.exports = () => {
 
-  const middleware = new Middleware({
-    config    : config,
-    LogService: LogService
-  });
-
-  parentRouter.use('/user', userRoutes({
+  router.use('/user', userRoutes({
     middleware: middleware.user,
     controller: controller.user
   }));
 
-  return parentRouter;
+  return router;
 
 }  

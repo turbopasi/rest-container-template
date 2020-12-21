@@ -1,16 +1,14 @@
 const config         = require('./config');
 const errors         = require('./util/errors');
-const LogService     = new require('./services').LogService({
-  host   : 'localhost',
-  service: 'rest-container-template'
-});
+const container      = require('./injector');
+
+const LogService = container.get('LogService');
 
 async function startServer() {
 
   await require('./loaders')({
     errors    : errors,
-    config    : config,
-    LogService: LogService
+    config    : config
   });
 
   LogService.info('Server started');
@@ -18,4 +16,5 @@ async function startServer() {
 }
 
 startServer(); 
+
 

@@ -1,30 +1,17 @@
 const expressLoader  = require('./express');
 const mongooseLoader = require('./mongoose');
 
-const UserJoiModel      = require('../models').joi.user;
-const UserMongooseModel = require('../models').mongoose.user;
-const { UserService }   = require('../services');
-const UserServiceInstance = new UserService({
-  mongooseModel: UserMongooseModel,
-  joiModel     : UserJoiModel
-})
+const container = require('../injector');
+const LogService = container.get('LogService');
 
 module.exports = async ({
-  config,
-  LogService
+  config
 }) => {
 
-  await expressLoader({
-    config     : config.express,
-    LogService : LogService,
-    UserService: UserServiceInstance
-  });
+  await expressLoader();
   LogService.info('Express initialized')
 
-  await mongooseLoader({
-    config    : config.mongodb,
-    LogService: LogService
-  });
+  await mongooseLoader();
   LogService.info('Mongoose initialized');
 
 }

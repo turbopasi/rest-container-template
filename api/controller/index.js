@@ -1,24 +1,18 @@
-module.exports = function ({ config, LogService, UserService }) {
+module.exports = {
 
-  const userOptions = {
-    LogService : LogService,
-    UserService: UserService
-  }
-
-  this.user = {
+  user : {
     get : {
-      '/:id': require('./get.user.id')(userOptions)
+      '/:id': require('./get.user.id')
     },
     post : {
-      '/': require('./post.user.index')(userOptions)
+      '/': require('./post.user.index')
     },
     put : {
-      '/:id': require('./put.user.id')(userOptions)
+      '/:id': require('./put.user.id')
     },
     delete : {
-      '/:id': require('./delete.user.id')(userOptions)
+      '/:id': require('./delete.user.id')
     }
   }
-
 
 }
