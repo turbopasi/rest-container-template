@@ -2,11 +2,11 @@ const router = require('express').Router();
 
 module.exports = ({ controller, middleware }) => {
 
-  router.post('/', controller.post['/'], (req, res) => {
+  router.post('/', middleware.create, controller.post['/'], (req, res) => {
     return res.status(200).json(res.data);
   });
 
-  router.get('/:id', middleware.test, controller.get['/:id'], (req, res) => {
+  router.get('/:id', controller.get['/:id'], (req, res) => {
     return res.status(200).json(res.data);
   });
 

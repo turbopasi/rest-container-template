@@ -3,6 +3,7 @@ module.exports = {
     user : require('./mongoose/user')
   },
   joi : {
-    user : require('./joi/user')
+    createUser : require('./joi/user').createUser,
+    updateUser : require('./joi/user').updateUser
   }
 }

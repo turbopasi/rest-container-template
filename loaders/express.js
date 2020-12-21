@@ -29,8 +29,7 @@ module.exports = async () => {
 
   // Load express routes
   app.use('/', api());
-
-  // app.use(handleErrors(LogService));
+  app.use(handleErrors(LogService));
 
   // Start express server by listening to a port
   try {
@@ -57,19 +56,19 @@ function handleErrors (LogService) {
 
     LogService.error(`${err.name} ${err.message}`);
 
-    if (err instanceof GeneralError) {
-      return res.status(err.getCode()).json({
-        status : 'error',
-        message: err.message
-      });
-    }
+    // if (err instanceof GeneralError) {
+    //   return res.status(err.getCode()).json({
+    //     status : 'error',
+    //     message: err.message
+    //   });
+    // }
 
-    if (err.name === 'ValidationError') {
-      return res.status(402).json({
-        status : 'error',
-        message: err.message
-      });
-    }
+    // if (err.name === 'ValidationError') {
+    //   return res.status(402).json({
+    //     status : 'error',
+    //     message: err.message
+    //   });
+    // }
 
     return res.status(500).json({
       status : 'error',

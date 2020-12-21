@@ -1,6 +1,6 @@
-const { UserService, LogService } = require('../services');
-const UserJoiModel      = require('../models').joi.user;
-const UserMongooseModel = require('../models').mongoose.user;
+const { UserService, LogService, ValidationService } = require('../services');
+const JoiModel      = require('../models').joi;
+const MongooseModel = require('../models').mongoose;
 
 /////////////////////////////////
 
@@ -39,11 +39,21 @@ container.register('LogService', logServiceInstance);
 //////////////////////////////////
 
 const userServiceInstance = new UserService({
-  mongooseModel: UserMongooseModel,
-  joiModel     : UserJoiModel
+  mongooseModel: MongooseModel.user,
+  // joiModel     : UserJoiModel
 });
 
 container.register('UserService', userServiceInstance);
+
+///////////////////////////////////
+
+const validationServiceInstance = new ValidationService({
+  schemas : JoiModel
+});
+
+container.register('ValidationService', validationServiceInstance);
+
+/////////////////////////////////
 
 module.exports = container;
 
