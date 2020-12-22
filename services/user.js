@@ -49,9 +49,7 @@ async function FindByIdAndDelete (id = null) {
 
 async function FindByIdAndUpdate (id = null, update = {}, {upsert = false, returnNew = true, select = null} = {}) {
   try {
-    if (!id) { throw new Error('id required to update user by id'); }
-    const validateData = await this.schema.updateUser.validateAsync(update, { stripUnknown : true });
-    let mongooseQuery = this.model.findByIdAndUpdate(id, validateData, {
+    let mongooseQuery = this.model.findByIdAndUpdate(id, update, {
       upsert, new : returnNew
     });
     if (select) { mongooseQuery = mongooseQuery.select(select); }

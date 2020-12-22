@@ -51,7 +51,7 @@ class AuthenticationError extends GeneralError {
       code       : 1339,
       errors     : [],
       status     : 401
-    }
+    };
   }
 }
 
@@ -63,7 +63,19 @@ class DuplicateError extends GeneralError {
       code : 1340,
       errors : errors,
       status : 400
-    }
+    };
+  }
+}
+
+class ResourceNotFoundError extends GeneralError {
+  constructor(errors = []) {
+    super('Resource not found');
+    this.data = {
+      description: 'We couldn\'t find what you were looking for',
+      code : 1341,
+      errors : errors,
+      status : 404
+    };
   }
 }
 
@@ -72,7 +84,8 @@ function isCustomError (error) {
     error instanceof GeneralError || 
     error instanceof BadRequestError || 
     error instanceof AuthenticationError || 
-    error instanceof DuplicateError
+    error instanceof DuplicateError ||
+    error instanceof ResourceNotFoundError
   ) {
     return true
   } else {
@@ -85,5 +98,6 @@ module.exports = {
   BadRequestError,
   AuthenticationError,
   DuplicateError,
+  ResourceNotFoundError,
   isCustomError
 };
