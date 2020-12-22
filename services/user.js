@@ -83,7 +83,6 @@ async function Exists (query = {}) {
 }
 
 async function Create (data) {
-  console.log(data)
   try {
     const newUser = new this.model(data);
     const result = await newUser.save();
