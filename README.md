@@ -1,5 +1,7 @@
 # REST Container Template
 
+![Header Logo](https://i.imgur.com/WR1l3CQ.png)
+
 ## Contents Overview
 - Loader
 - Express Routes 
