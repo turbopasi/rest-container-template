@@ -1,6 +1,7 @@
 const { UserService, LogService, ValidationService } = require('../services');
-const JoiModel      = require('../models').joi;
-const MongooseModel = require('../models').mongoose;
+const JoiModel                                       = require('../models').joi;
+const MongooseModel                                  = require('../models').mongoose;
+const config                                         = require('../config');
 
 /////////////////////////////////
 
@@ -30,7 +31,7 @@ const container = new Container();
 //////////////////////////////////
 
 const logServiceInstance = new LogService({
-  host   : 'localhost',
+  host   : config.hostname,
   service: 'rest-container-template'
 });
 

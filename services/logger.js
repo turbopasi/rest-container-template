@@ -24,8 +24,8 @@ const colorsBG = {
 
 module.exports = function ({ host, service }) {
 
-  const ConsoleFormat = printf(({ level, message, timestamp}) => {
-    return `${chalk(timestamp)} - ${colorsBG[level](level.toUpperCase())} - ${colorsFG[level](message)}` 
+  const ConsoleFormat = printf(({ level, message, timestamp, host, defaultMeta}) => {
+    return `${chalk(timestamp)} - ${host} - ${colorsBG[level](level.toUpperCase())} - ${colorsFG[level](message)}` 
   });
 
   const logger = createLogger({

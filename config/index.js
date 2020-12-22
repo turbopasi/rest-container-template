@@ -1,10 +1,12 @@
 const dotenv = require('dotenv');
+const os     = require('os');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 const found = dotenv.config();
 if (found.error) { throw new Error('Couldn\'t find .env file'); }
 
 module.exports = {
+  hostname : os.hostname(),
   express : {
     port        : process.env.PORT,
     consoleDebug: process.env.CONSOLE_DEBUG
