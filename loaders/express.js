@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const cors       = require('cors');
 const express    = require('express');
 const api        = require('../api');
-// const { GeneralError } = require('../util/errors');
+const utilError  = require('../util/error');
 
 const { express : config } = require('../config');
 const container            = require('../injector');
@@ -12,24 +12,32 @@ module.exports = async () => {
 
   const app = express();
 
-  app.get('/status', (req, res) => { return res.status(200).end(); });
-  app.head('/status', (req, res) => { return res.status(200).end(); });
+  // Some express settings
   app.enable('trust proxy');
   app.disable('x-powered-by');
 
+  // Some intern express middleware
   app.use((req, res, next) => {
     LogService.http(`${req.ip} ${req.method} ${req.path}`);
     return next();
   });
   
-  // Some express middleware
+  // Some extern express middleware
   app.use(cors());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
 
   // Load express routes
   app.use('/', api());
-  app.use(handleErrors(LogService));
+  app.get('/status', (req, res) => { return res.status(200).end(); });
+  app.head('/status', (req, res) => { return res.status(200).end(); });
+  app.get('*', (req, res) => { return res.status(404).end(); });
+  app.post('*', (req, res) => { return res.status(404).end(); });
+  app.put('*', (req, res) => { return res.status(404).end(); });
+  app.delete('*', (req, res) => { return res.status(404).end(); });
+
+  // Error handling
+  app.use(handleRequestErrors(LogService, utilError));
 
   // Start express server by listening to a port
   try {
@@ -42,6 +50,8 @@ module.exports = async () => {
 
 }
 
+///////////// LOCAL HELPER FUNCTIONS /////////////////
+
 function listen (app, port) {
   return new Promise((resolve, reject) => {
     app.listen(port, (err) => {
@@ -51,29 +61,19 @@ function listen (app, port) {
   });
 }
 
-function handleErrors (LogService) {
+function handleRequestErrors (LogService, utilError) {
   return (err, req, res, next) => {
 
     LogService.error(`${err.name} ${err.message}`);
 
-    // if (err instanceof GeneralError) {
-    //   return res.status(err.getCode()).json({
-    //     status : 'error',
-    //     message: err.message
-    //   });
-    // }
-
-    // if (err.name === 'ValidationError') {
-    //   return res.status(402).json({
-    //     status : 'error',
-    //     message: err.message
-    //   });
-    // }
-
-    return res.status(500).json({
-      status : 'error',
-      message: 'Something went wrong'
-    });
+    if (utilError.isCustomError(err)) {
+      const errData = err.getHttpResponse();
+      return res.status(errData.status).json(errData.response);
+    } else {
+      const generalError = new utilError.GeneralError('Something went wrong', 'There was an unforseen problem with your request, please try again later');
+      const errData = generalError.getHttpResponse();
+      return res.status(errData.status).json(errData.response);
+    }
 
   }
 }

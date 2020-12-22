@@ -1,18 +1,16 @@
 module.exports = {
 
-  user : {
-    get : {
-      '/:id': require('./get.user.id')
-    },
-    post : {
-      '/': require('./post.user.index')
-    },
-    put : {
-      '/:id': require('./put.user.id')
-    },
-    delete : {
-      '/:id': require('./delete.user.id')
-    }
+  create : {
+    user: require('./post.user.index')
+  },
+  get : {
+    user: require('./get.user.id')
+  },
+  update : {
+    user: require('./put.user.id')
+  },
+  delete : {
+    user: require('./delete.user.id')
   }
 
 }

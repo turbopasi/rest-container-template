@@ -1,5 +1,3 @@
-const config     = require('./config');
-const errors     = require('./util/errors');
 const container  = require('./injector');
 const LogService = container.get('LogService');
 
@@ -11,5 +9,15 @@ async function startServer() {
 }
 
 startServer(); 
+
+// const general = new GeneralError('WoW', 'That\'s ugly');
+// console.log(general.getHttpResponse());
+
+// const badrequest = new BadRequestError()
+// console.log(badrequest.getHttpResponse());
+
+// const auth = new AuthenticationError();
+// console.log(auth.getHttpResponse());
+
 
 

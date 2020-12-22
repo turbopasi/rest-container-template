@@ -7,11 +7,8 @@ const router     = express.Router();
 
 module.exports = () => {
 
-  router.use('/user', userRoutes({
-    middleware: middleware.user,
-    controller: controller.user
-  }));
-
+  router.use('/user', userRoutes({ middleware, controller }));
+  
   return router;
 
 }  
