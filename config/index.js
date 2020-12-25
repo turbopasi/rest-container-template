@@ -6,10 +6,14 @@ const found = dotenv.config();
 if (found.error) { throw new Error('Couldn\'t find .env file'); }
 
 module.exports = {
-  hostname : os.hostname(),
+  hostname: os.hostname(),
   express : {
     port        : process.env.PORT,
     consoleDebug: process.env.CONSOLE_DEBUG
+  },
+  jwt: {
+    secret    : process.env.JWTSECRET,
+    expiration: parseInt(process.env.JWTEXPIRATION)
   },
   mongodb: {
     username          : process.env.MONGODB_USERNAME,

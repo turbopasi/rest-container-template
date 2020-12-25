@@ -8,11 +8,18 @@ const router = require('express').Router();
 
 module.exports = ({ controller, middleware }) => {
 
+  router.post('/login', middleware.validate.loginUser, controller.create.login, (req, res) => {
+    return res.status(200).json(res.data);
+  });
+
   router.post('/', middleware.validate.createUser, controller.create.user, (req, res) => {
     return res.status(201).json(res.data);
   });
 
-  router.get('/:id', controller.get.user, (req, res) => {
+
+  ///////////////////
+
+  router.get('/:id', middleware.authenticate.user, controller.get.user, (req, res) => {
     return res.status(200).json(res.data);
   });
 

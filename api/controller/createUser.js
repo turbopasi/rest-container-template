@@ -6,6 +6,7 @@ module.exports = async (req, res, next) => {
   try {
 
     const newUser = await UserService.Create(req.body, { select : 'email username'});
+    
     res.data = newUser;
     LogService.info(`New user created ${newUser._id} ${newUser.email}`)
     return next();

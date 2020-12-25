@@ -8,7 +8,7 @@ module.exports = async(req, res, next) => {
     const user = await UserService.FindByIdAndUpdate(req.params.id, req.body);
 
     if (!user) {
-      LogService.error(`Tried to update user ${req.params.id} but was not found`);
+      LogService.error(`User update failed - User ${req.params.id} not found`);
       return next(new ResourceNotFoundError([
         {
           message : `User '${req.params.id} does not exist'`

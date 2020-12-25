@@ -4,6 +4,7 @@ module.exports = {
   },
   joi : {
     createUser : require('./joi/user').createUser,
-    updateUser : require('./joi/user').updateUser
+    updateUser : require('./joi/user').updateUser,
+    loginUser  : require('./joi/user').loginUser
   }
 }

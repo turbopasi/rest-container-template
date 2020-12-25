@@ -1,16 +1,13 @@
 const chai   = require('chai')
 const should = chai.should();
 
+const config          = require('../config');
 const { UserService } = require('../services');
 
 before(async () => {  
-  const config = require('../config');
-  await require('../loaders')({
-    port        : config.express.port,
-    consoleDebug: config.express.consoleDebug
-  });
+  await require('../loaders')();
   return;
-});
+}); 
 
 describe('UserService', async function() {
 

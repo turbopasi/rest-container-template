@@ -1,6 +1,7 @@
 const { UserService, LogService, ValidationService } = require('../services');
 const JoiModel                                       = require('../models').joi;
 const MongooseModel                                  = require('../models').mongoose;
+const jsonwebtoken                                   = require('jsonwebtoken');
 const config                                         = require('../config');
 
 /////////////////////////////////
@@ -41,7 +42,8 @@ container.register('LogService', logServiceInstance);
 
 const userServiceInstance = new UserService({
   mongooseModel: MongooseModel.user,
-  // joiModel     : UserJoiModel
+  jsonwebtoken : jsonwebtoken,
+  config       : config
 });
 
 container.register('UserService', userServiceInstance);

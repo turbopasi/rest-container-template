@@ -1,9 +1,9 @@
 
-module.exports = function ({ mongooseModel, joiModel }) {
+module.exports = function ({ mongooseModel, jsonwebtoken, config }) {
 
-  this.model  = mongooseModel;
-  this.schema = joiModel;
-
+  this.config            = config;
+  this.model             = mongooseModel;
+  this.jsonwebtoken      = jsonwebtoken;
   this.Find              = Find;
   this.FindById          = FindById;
   this.FindByIdAndDelete = FindByIdAndDelete;
@@ -11,6 +11,7 @@ module.exports = function ({ mongooseModel, joiModel }) {
   this.FindOne           = FindOne;
   this.Exists            = Exists;
   this.Create            = Create;
+  this.Login             = Login;
 
 }
 
@@ -27,7 +28,6 @@ async function Find ({query = {}, select = null} = {}) {
 
 async function FindById (id = null, {select = null} = {}) {
   try {
-    if (!id) { throw new Error ('id required to get user by id'); }
     let mongooseQuery = this.model.findById(id);
     if (select) { mongooseQuery = mongooseQuery.select(select); }
     const result = await mongooseQuery.exec(); 
@@ -39,7 +39,6 @@ async function FindById (id = null, {select = null} = {}) {
 
 async function FindByIdAndDelete (id = null) {
   try {
-    if (!id) { throw new Error('id required to delete user by id'); }
     const result = await this.model.findByIdAndDelete(id).exec();
     return result;
   } catch (ex) {
@@ -85,6 +84,26 @@ async function Create (data) {
     const newUser = new this.model(data);
     const result = await newUser.save();
     return result;
+  } catch (ex) {
+    throw ex;
+  }
+}
+
+async function Login ({ email, password }) {
+  try {
+
+    const user = await this.FindOne({ query : { email }});
+    if (!user) { return null; }
+    const passwordMatch = await user.comparePassword(password);
+    if (!passwordMatch) { return null; }
+    if (passwordMatch) {
+      const token = this.jsonwebtoken.sign({
+        id : user._id,
+        exp: Math.floor(new Date().getTime()/1000) + this.config.jwt.expiration
+      }, this.config.jwt.secret);
+      return token;
+    }
+
   } catch (ex) {
     throw ex;
   }
