@@ -5,13 +5,13 @@ const { ResourceNotFoundError } = require('../../util/error');
 module.exports = async (req, res, next) => {
   try {
 
-    const user = await UserService.FindByIdAndDelete(req.params.id);
+    const user = await UserService.FindByIdAndDelete(req.user._id);
 
     if (!user) {
-      LogService.error(`User delete failed - User ${req.params.id} not found`);
+      LogService.error(`User delete failed - User ${req.user._id} not found`);
       return next(new ResourceNotFoundError([
         {
-          message : `User '${req.params.id} does not exist'`
+          message : `User '${req.user._id} does not exist'`
         }
       ]));
     }

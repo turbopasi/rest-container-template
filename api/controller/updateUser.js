@@ -5,13 +5,13 @@ const { ResourceNotFoundError, DuplicateError } = require('../../util/error');
 module.exports = async(req, res, next) => {
   try {
 
-    const user = await UserService.FindByIdAndUpdate(req.params.id, req.body);
+    const user = await UserService.FindByIdAndUpdate(req.user._id, req.body);
 
     if (!user) {
-      LogService.error(`User update failed - User ${req.params.id} not found`);
+      LogService.error(`User update failed - User ${req.user._id} not found`);
       return next(new ResourceNotFoundError([
         {
-          message : `User '${req.params.id} does not exist'`
+          message : `User '${req.user._id} does not exist'`
         }
       ]));
     }

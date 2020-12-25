@@ -3,6 +3,7 @@ const passportJWT               = require('passport-jwt');
 const ExtractJwt                = passportJWT.ExtractJwt;
 const JwtStrategy               = passportJWT.Strategy;
 const UserService               = require('../injector').get('UserService');
+const LogService                = require('../injector').get('LogService');
 const { ResourceNotFoundError } = require('../util/error');
 const config                    = require('../config')
 
@@ -20,10 +21,10 @@ module.exports = async () => {
       const user = await UserService.FindById(payload.id);
 
       if (!user) {
-        LogService.error(`User read failed - User ${req.params.id} not found`);
+        LogService.error(`User read failed - User ${payload.id} not found`);
         return next(new ResourceNotFoundError([
           {
-            message : `User '${req.params.id} does not exist'`
+            message : `User '${payload.id}' does not exist`
           }
         ]));
       }

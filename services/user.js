@@ -46,6 +46,7 @@ async function FindByIdAndDelete (id = null) {
   }
 }
 
+// ⚠ does not trigger "save" hook of user model
 async function FindByIdAndUpdate (id = null, update = {}, {upsert = false, returnNew = true, select = null} = {}) {
   try {
     let mongooseQuery = this.model.findByIdAndUpdate(id, update, {

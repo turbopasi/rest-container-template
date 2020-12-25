@@ -19,15 +19,15 @@ module.exports = ({ controller, middleware }) => {
 
   ///////////////////
 
-  router.get('/:id', middleware.authenticate.user, controller.get.user, (req, res) => {
+  router.get('/', middleware.authenticate.user, controller.get.user, (req, res) => {
     return res.status(200).json(res.data);
   });
 
-  router.put('/:id', middleware.validate.updateUser, controller.update.user, (req, res) => {
+  router.put('/', middleware.authenticate.user, middleware.validate.updateUser, controller.update.user, (req, res) => {
     return res.status(200).json(res.data);
   });
 
-  router.delete('/:id', controller.delete.user, (req, res) => {
+  router.delete('/', middleware.authenticate.user, controller.delete.user, (req, res) => {
     return res.status(204).end();
   });
 
