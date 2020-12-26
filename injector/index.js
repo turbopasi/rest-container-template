@@ -1,4 +1,4 @@
-const { UserService, LogService, ValidationService } = require('../services');
+const { UserService, LogService, ValidationService, EventService } = require('../services');
 const JoiModel                                       = require('../models').joi;
 const MongooseModel                                  = require('../models').mongoose;
 const jsonwebtoken                                   = require('jsonwebtoken');
@@ -57,6 +57,12 @@ const validationServiceInstance = new ValidationService({
 container.register('ValidationService', validationServiceInstance);
 
 /////////////////////////////////
+
+const eventServiceInstance = new EventService({
+  EventEmitter : require('events')
+});
+
+container.register('EventService', eventServiceInstance);
 
 module.exports = container;
 

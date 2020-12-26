@@ -36,6 +36,7 @@
     "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
+    "axios": "^0.21.1",
     "chai": "^4.2.0",
     "mocha": "^8.2.1"
   }

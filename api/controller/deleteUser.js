@@ -1,5 +1,6 @@
 const UserService               = require('../../injector').get('UserService');
 const LogService                = require('../../injector').get('LogService');
+const EventService              = require('../../injector').get('EventService');
 const { ResourceNotFoundError } = require('../../util/error');
 
 module.exports = async (req, res, next) => {
@@ -18,6 +19,7 @@ module.exports = async (req, res, next) => {
 
     res.data = user;
     LogService.info(`Deleted user ${user._id}`);
+    EventService.emit('USER_DELETED');
     return next();
 
   } catch (ex) {

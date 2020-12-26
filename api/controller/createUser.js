@@ -1,5 +1,6 @@
 const UserService        = require('../../injector').get('UserService');
 const LogService         = require('../../injector').get('LogService');
+const EventService       = require('../../injector').get('EventService');
 const { DuplicateError } = require('../../util/error');
 
 module.exports = async (req, res, next) => {
@@ -8,7 +9,8 @@ module.exports = async (req, res, next) => {
     const newUser = await UserService.Create(req.body, { select : 'email username'});
     
     res.data = newUser;
-    LogService.info(`New user created ${newUser._id} ${newUser.email}`)
+    LogService.info(`New user created ${newUser._id} ${newUser.email}`);
+    EventService.emit('NEW_USER');
     return next();
 
   } catch (ex) {
