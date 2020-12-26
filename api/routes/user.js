@@ -16,9 +16,6 @@ module.exports = ({ controller, middleware }) => {
     return res.status(201).json(res.data);
   });
 
-
-  ///////////////////
-
   router.get('/', middleware.authenticate.user, controller.get.user, (req, res) => {
     return res.status(200).json(res.data);
   });
