@@ -36,7 +36,7 @@ MONGODB_USERNAME=""
 MONGODB_PASSWORD=""
 MONGODB_DATABASENAME=""
 ```
-#### Install & Run
+#### Install & run for development
 ```bash
 cd my-own-custom-repo
 npm install 
@@ -45,3 +45,10 @@ npm run dev
 ```bash
 npm test
 ```
+
+#### Build Docker image & run container
+```bash
+docker build -t <your username>/rest-container-template .
+docker run -p 20300/8080 -d <your username>/rest-container-template
+```
+
