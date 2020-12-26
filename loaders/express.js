@@ -63,7 +63,7 @@ function listen (app, port) {
 
 function handleRequestErrors (LogService, utilError) {
   return (err, req, res, next) => {
-
+    
     LogService.error(`${err.name} ${err.message}`);
 
     if (utilError.isCustomError(err)) {

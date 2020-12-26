@@ -23,6 +23,22 @@ UserSchema.pre('save', function (next) {
   });
 });
 
+UserSchema.pre('findOneAndUpdate', function (next) {
+  if (this._update.password) {
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) { return next(err); }
+      bcrypt.hash(this._update.password, salt, (err, hash) => {
+        if (err) { return next(err); }
+        console.log(hash)
+        this._update.password = hash;
+        return next();
+      });
+    });
+  } else {
+    return next();
+  }
+});
+
 UserSchema.methods.comparePassword = function (candidatePassword, cb) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
