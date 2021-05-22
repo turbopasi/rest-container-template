@@ -25,7 +25,7 @@ rm -r .git
 git init .
 ```
 #### Environment Variables
-For you to be able to create a MongoDB Connection, add you secret variables to a `.env` file in the root directory
+For you to be able to create a MongoDB Cloud Connection, add you secret variables to a `.env` file in the root directory
 ```env
 #EXPRESS
 PORT=20300
