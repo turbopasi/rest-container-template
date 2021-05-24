@@ -1,8 +1,12 @@
-const { UserService, LogService, ValidationService, EventService } = require('../services');
 const JoiModel                                       = require('../models').joi;
 const MongooseModel                                  = require('../models').mongoose;
 const jsonwebtoken                                   = require('jsonwebtoken');
 const config                                         = require('../config');
+
+/////////////////////////////////
+
+// SERVICES
+const { UserService, LogService, ValidationService, EventService } = require('../services');
 
 /////////////////////////////////
 
