@@ -25,12 +25,8 @@ rm -r .git
 git init .
 ```
 #### Environment Variables
-For you to be able to create a MongoDB Cloud Connection, add you secret variables to a `.env` file in the root directory
+For you to be able to create a MongoDB Cloud Connection, add you secret variables to a `.env` file in the root directory. See `.env.example` for an example.
 ```env
-#EXPRESS
-PORT=20300
-CONSOLE_DEBUG=true
-
 #MONGODB
 MONGODB_USERNAME=""
 MONGODB_PASSWORD=""
@@ -45,6 +41,11 @@ npm run dev
 ```bash
 npm test
 ```
+
+### Hygen generator included
+I started to add convenient code generators using `hygen`
+- To add a new route to the express router run `npm run add:route`
+- To add a new subroute to the new route run `npm run add:subroute`
 
 #### Build Docker image & run container
 ```bash

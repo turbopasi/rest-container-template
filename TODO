@@ -1,4 +1,4 @@
 
 Todo:
-  ☐ UserService
+  ✔ UserService @done(21-05-24 13:52)
     ✔ Fix : UserUpdate does not hash new password @done(20-12-26 21:15)
