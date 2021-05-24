@@ -46,6 +46,7 @@ npm test
 I started to add convenient code generators using `hygen`
 - To add a new route to the express router run `npm run add:route`
 - To add a new subroute to the new route run `npm run add:subroute`
+- To add a new service run `npm run add:service`
 
 #### Build Docker image & run container
 ```bash
