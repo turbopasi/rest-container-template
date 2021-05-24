@@ -19,6 +19,7 @@ module.exports = {
     username          : process.env.MONGODB_USERNAME,
     password          : process.env.MONGODB_PASSWORD,
     databasename      : process.env.MONGODB_DATABASENAME,
+    clusterURL        : process.env.MONGODB_CLUSTERURL,
     useNewUrlParser   : true,
     useUnifiedTopology: true,
     useCreateIndex    : true,

@@ -4,7 +4,7 @@ const LogService         = require('../injector').get('LogService');
 
 module.exports = async () => {
 
-  mongoose.connect(`mongodb+srv://${config.username}:${config.password}@template-cluster.lf07u.mongodb.net/${config.databasename}?retryWrites=true&w=majority`, {
+  mongoose.connect(`mongodb+srv://${config.username}:${config.password}@${config.custerURL}/${config.databasename}?retryWrites=true&w=majority`, {
     useNewUrlParser   : config.useNewUrlParser,
     useUnifiedTopology: config.useUnifiedTopology,
     useCreateIndex    : config.useCreateIndex,
