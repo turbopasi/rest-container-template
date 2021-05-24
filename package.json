@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "dev": "nodemon server.js",
-    "gen:route" : "hygen router new"
+    "add:route" : "hygen route new",
+    "add:subroute" : "hygen subroute new"
   },
   "repository": {
     "type": "git",

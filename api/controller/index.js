@@ -1,17 +1,17 @@
 module.exports = {
 
-  create : {
+  create: {
     user : require('./createUser'),
-    login: require('./createLogin')
+    login: require('./createLogin'),
   },
-  get : {
-    user: require('./getUser')
+  get: {
+    user: require('./getUser'),
   },
-  update : {
-    user: require('./updateUser')
+  update: {
+    user: require('./updateUser'),
   },
-  delete : {
-    user: require('./deleteUser')
+  delete: {
+    user: require('./deleteUser'),
   }
 
 }
