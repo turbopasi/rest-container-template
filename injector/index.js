@@ -37,7 +37,7 @@ const container = new Container();
 
 const logServiceInstance = new LogService({
   host   : config.hostname,
-  service: 'rest-container-template'
+  service: 'ois-mono'
 });
 
 container.register('LogService', logServiceInstance);

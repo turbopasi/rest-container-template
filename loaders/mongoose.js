@@ -4,11 +4,11 @@ const LogService         = require('../injector').get('LogService');
 
 module.exports = async () => {
 
-  mongoose.connect(`mongodb+srv://${config.username}:${config.password}@${config.custerURL}/${config.databasename}?retryWrites=true&w=majority`, {
-    useNewUrlParser   : config.useNewUrlParser,
-    useUnifiedTopology: config.useUnifiedTopology,
-    useCreateIndex    : config.useCreateIndex,
-    useFindAndModify  : config.useFindAndModify
+  mongoose.connect(`mongodb+srv://${config.username}:${config.password}@${config.clusterURL}/${config.databasename}?retryWrites=true&w=majority`, {
+    // useNewUrlParser   : config.useNewUrlParser,
+    // useUnifiedTopology: config.useUnifiedTopology,
+    //useCreateIndex    : config.useCreateIndex,
+    //useFindAndModify  : config.useFindAndModify
   });
 
   const db = mongoose.connection;
